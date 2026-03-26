@@ -1,0 +1,33 @@
+# Compiled class files
+*.class
+
+# JAR files
+*.jar
+*.war
+*.ear
+
+# Build output
+/bin/
+/out/
+/build/
+/target/
+
+# IDE files - IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# IDE files - Eclipse
+.classpath
+.project
+.settings/
+
+# IDE files - VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
