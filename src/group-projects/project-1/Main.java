@@ -12,9 +12,61 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        
+        // Test the merge sort variant on integer arrays of size 2^20 to 2^30
+        int arraySizePower = 20;
+        // Use arrays of each provided power to test int arrays with merge sort
+        while (arraySizePower <= 30) {
+            int[] myArr = new int[(int) Math.pow(2, arraySizePower)];
+            // Fill the array with random integers
+            for (int i = 0; i < myArr.length; i++) {
+                myArr[i] = (int) (Math.random() * 1000000);
+            }
+            long startTime = System.nanoTime();
+            mergeSortVariantInt(myArr, 0, myArr.length - 1);
+            long endTime = System.nanoTime();
+            // Calculate the duration and print the results
+            long duration = endTime - startTime;
+            System.out.println("Merge Sort Variant Int Array Size Power: " + arraySizePower + " Time: " + duration + " nanoseconds");
+            arraySizePower++;
+        }
+
+        // Test the merge sort variant on double arrays of size 2^20 to 2^30
+        arraySizePower = 20;
+        // Use arrays of each provided power to test double arrays with merge sort
+        while (arraySizePower <= 30) {
+            double[] myArr = new double[(int) Math.pow(2, arraySizePower)];
+            // Fill the array with random doubles
+            for (int i = 0; i < myArr.length; i++) {
+                myArr[i] = Math.random() * 1000000;
+            }
+            long startTime = System.nanoTime();
+            mergeSortVariantDouble(myArr, 0, myArr.length - 1);
+            long endTime = System.nanoTime();
+            // Calculate the duration and print the results
+            long duration = endTime - startTime;
+            System.out.println("Merge Sort Variant Double Array Size Power: " + arraySizePower + " Time: " + duration + " nanoseconds");
+            arraySizePower++;
+        }
     }
-    
+
+    // This method will implement three way merge sort on integer arrays
+    // Recursively call merge sort on three subarrays, then merge the results
+    public static void mergeSortVariantInt(int[] myArr, int left, int right) {
+        // Base case: if the left index is greater than or equal to the right index, return
+        if (left >= right) return;
+        
+        // Calculate the two middle indices to split the array into three parts
+        int middle1 = left + (right - left) / 3;
+        int middle2 = left + 2 * (right - left) / 3;
+
+        // Recursively split into three subarrays
+        mergeSortVariantInt(myArr, left, middle1);
+        mergeSortVariantInt(myArr, middle1 + 1, middle2);
+        mergeSortVariantInt(myArr, middle2 + 1, right);
+
+        // Merge the three subarrays into sorted order
+        mergeVariantInt(myArr, left, middle1, middle2, right);
+    }
     // Merge three subarrays into one sorted array
     public static void mergeVariantInt(int[] myArr, int left, int middle1, int middle2, int right) {
         // Create a temporary array to hold the merged result
