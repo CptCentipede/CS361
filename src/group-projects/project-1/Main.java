@@ -8,8 +8,6 @@
  *              finding that password from the dataset.
  */
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
         // Test the merge sort variant on integer arrays of size 2^20 to 2^30
