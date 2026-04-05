@@ -1,12 +1,12 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException; 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class BloomFilterTest {
     public static void main(String[] args) {
         BloomFilter bloom = new BloomFilter();
-        Scanner scanner = new Scanner(System.in); 
+        Scanner scanner = new Scanner(System.in);
 
         System.out.print("Commands - add (word), check (word), runfiles, and exit"); // Added runfiles to instructions
 
@@ -32,7 +32,7 @@ public class BloomFilterTest {
                 System.out.println("Try 'add (word)', 'check (word)', 'runfiles', or 'exit'");
                 continue;
             }
-            String command = parts[0]; 
+            String command = parts[0];
             String word = parts[1];
 
             // reads first word of user input and handles add/check call, otherwise repeat commands.
@@ -62,8 +62,11 @@ public class BloomFilterTest {
         int positivePassed = 0;
 
         int negativeTotal = 0;
-        int falsePositives = 0; 
+        int falsePositives = 0;
 
+        // query timing variables
+        int queryCount = 0;
+        long totalQueryTime = 0;
 
         try {
             String line;
@@ -79,14 +82,14 @@ public class BloomFilterTest {
             positiveInsertReader.close(); // why do I keep forgetting to close it :C
 
 
-            // Rechecking the positive/train file 
+            // Rechecking the positive/train file
             BufferedReader positiveCheckReader = new BufferedReader(new FileReader("positiveSet_clean.txt"));
             while ((line = positiveCheckReader.readLine()) != null) {
                 line = line.trim();
                 if (line.isEmpty()) continue;
 
-                positiveTotal++; 
-                if (bloom.check(line)) { 
+                positiveTotal++;
+                if (bloom.check(line)) {
                     positivePassed++;
                 }
             }
@@ -97,11 +100,22 @@ public class BloomFilterTest {
             // Checking the negative/test file
             BufferedReader negativeReader = new BufferedReader(new FileReader("negativeSet_clean.txt"));
             while ((line = negativeReader.readLine()) != null) {
-                line = line.trim(); 
+                line = line.trim();
                 if (line.isEmpty()) continue;
 
-                negativeTotal++; 
-                if (bloom.check(line)) { 
+                negativeTotal++;
+
+                long startTime = System.nanoTime();
+                boolean result = bloom.check(line);
+                long endTime = System.nanoTime();
+
+                // time only the first 1000 queries
+                if (queryCount < 1000) {
+                    totalQueryTime += (endTime - startTime);
+                    queryCount++;
+                }
+
+                if (result) {
                     falsePositives++;
                 }
             }
@@ -117,6 +131,14 @@ public class BloomFilterTest {
             }
 
             System.out.println("False positive rate: " + falsePositiveRate);
+
+            // average query time report
+            if (queryCount > 0) {
+                double averageQueryTimeNs = (double) totalQueryTime / queryCount;
+
+                System.out.println("Query time test ran on " + queryCount + " keys.");
+                System.out.println("Average time per query: " + averageQueryTimeNs + " ns");
+            }
 
 // Kept getting a few errors reading the files so threw this in here
         } catch (IOException e) {
