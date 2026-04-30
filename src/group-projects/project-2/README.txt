@@ -1,10 +1,32 @@
-#INSTRUCTIONS
+========================================================================
+CS361 PROJECT 2: COMPARING ARRAY VS PRIORITY QUEUE IMPLEMENTATIONS
+              OF DIJKSTRA'S ALGORITHM
+========================================================================
 
-Run using Java version 8
+Authors: Miles Aether, Prince Tsague
 
-##To Run Code in Terminal
 
-cd into path containing all files
+REQUIREMENTS
+------------------------------------------------------------------------
 
-javac Main.java
-java Main
+- Java 8 or later
+- Python 3.8 or later
+
+No external dependencies.
+
+
+HOW TO RUN
+------------------------------------------------------------------------
+
+Java (array-based implementation):
+
+    cd java
+    javac Main.java
+    java Main
+
+Python (priority queue implementation):
+
+    cd python
+    python3 main.py
+
+On Windows, use "python main.py" instead of "python3 main.py".
