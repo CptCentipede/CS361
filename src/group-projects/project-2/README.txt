@@ -4,6 +4,12 @@ CS361 PROJECT 2: COMPARING ARRAY VS PRIORITY QUEUE IMPLEMENTATIONS
 ========================================================================
 
 Authors: Miles Aether, Prince Tsague
+Contributions: Miles was responsible for all components invloving
+               the array-based implementation of Dijkstra's algorithm, 
+               written in Java and Prince the implementation involving 
+               the min-heap, written in Python. The report submitted with 
+               the code was also split in a similar manner. 
+               
 
 
 REQUIREMENTS
